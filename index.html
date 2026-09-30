@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="title" content="OceanXL: Large-scale Underwater 3D Gaussian Splatting via Block Partitioning and Adaptive Pruning">
+  <meta name="description" content="OceanXL is a scalable 3D Gaussian Splatting framework for large-scale underwater reconstruction using balanced scene partitioning and underwater-aware adaptive pruning.">
+  <meta name="keywords" content="OceanXL, Gaussian Splatting, 3DGS, underwater reconstruction, large-scale reconstruction, novel view synthesis, SIGGRAPH Asia 2026">
+  <meta name="author" content="Haoran Wang, Shaoyu Cai, Adrian Azzarelli, Zhuodong Jiang, Guoxi Huang, Eng Tat Khoo, Brett Seymour, Fan Zhang, David Bull, Nantheera Anantrasirichai">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://wanghaoran16.github.io/OceanXL-Large-scale-Underwater-3D-Gaussian-Splatting/">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="OceanXL Project Page">
+  <meta property="og:title" content="OceanXL: Large-scale Underwater 3D Gaussian Splatting">
+  <meta property="og:description" content="Fast, scalable and compact large-scale underwater reconstruction with balanced scene partitioning and adaptive pruning.">
+  <meta property="og:url" content="https://wanghaoran16.github.io/OceanXL-Large-scale-Underwater-3D-Gaussian-Splatting/">
+  <meta property="og:image" content="static/images/teaser.jpg">
+  <meta property="article:published_time" content="2026-09-24T15:35:08Z">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="OceanXL: Large-scale Underwater 3D Gaussian Splatting">
+  <meta name="twitter:description" content="Scalable underwater 3DGS via balanced block partitioning and adaptive pruning.">
+  <meta name="twitter:image" content="static/images/teaser.jpg">
+
+  <meta name="citation_title" content="OceanXL: Large-scale Underwater 3D Gaussian Splatting via Block Partitioning and Adaptive Pruning">
+  <meta name="citation_author" content="Wang, Haoran">
+  <meta name="citation_author" content="Cai, Shaoyu">
+  <meta name="citation_author" content="Azzarelli, Adrian">
+  <meta name="citation_author" content="Jiang, Zhuodong">
+  <meta name="citation_author" content="Huang, Guoxi">
+  <meta name="citation_author" content="Khoo, Eng Tat">
+  <meta name="citation_author" content="Seymour, Brett">
+  <meta name="citation_author" content="Zhang, Fan">
+  <meta name="citation_author" content="Bull, David">
+  <meta name="citation_author" content="Anantrasirichai, Nantheera">
+  <meta name="citation_publication_date" content="2026-09-24">
+  <meta name="citation_journal_title" content="arXiv">
+  <meta name="citation_arxiv_id" content="2609.29985">
+  <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2609.29985">
+
+  <title>OceanXL | Large-scale Underwater 3D Gaussian Splatting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="static/css/index.css?v=20260930-2">
+  <style>
+    /* Method section overrides: kept inline so GitHub Pages/browser cache cannot leave the old layout behind. */
+    .method-section, .method-section * { box-sizing: border-box; }
+    .method-section { color: #17262c !important; }
+    .method-section .section-title { color: #163c48 !important; }
+    .method-intro {
+      max-width: 820px;
+      margin: -0.35rem auto 2rem;
+      text-align: center;
+      color: #52666e !important;
+      font-size: 1.03rem;
+      line-height: 1.7;
+    }
+    .method-intro strong { color: #173e4a !important; }
+    .method-section .paper-figure figcaption {
+      color: #60737b !important;
+      background: transparent !important;
+    }
+    .method-cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .method-card {
+      border: 1px solid #d8e5e8;
+      border-radius: 16px;
+      background: #ffffff !important;
+      padding: 1.35rem 1.4rem 1.45rem;
+      box-shadow: 0 8px 28px rgba(28,71,84,.06);
+      color: #17262c !important;
+    }
+    .method-card-header {
+      display: flex;
+      align-items: baseline;
+      gap: .75rem;
+      margin-bottom: .65rem;
+    }
+    .method-number {
+      flex: 0 0 auto;
+      display: inline-block;
+      color: #126b84 !important;
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .09em;
+      line-height: 1;
+    }
+    .method-card h3 {
+      display: inline;
+      margin: 0 !important;
+      color: #173e4a !important;
+      font-size: 1.03rem;
+      font-weight: 750;
+      line-height: 1.35;
+    }
+    .method-card p {
+      margin: 0;
+      color: #60737b !important;
+      font-size: .92rem;
+      line-height: 1.58;
+    }
+    @media (max-width: 900px) {
+      .method-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "OceanXL: Large-scale Underwater 3D Gaussian Splatting via Block Partitioning and Adaptive Pruning",
+    "datePublished": "2026-09-24",
+    "url": "https://wanghaoran16.github.io/OceanXL-Large-scale-Underwater-3D-Gaussian-Splatting/",
+    "sameAs": "https://arxiv.org/abs/2609.29985",
+    "image": "static/images/teaser.jpg",
+    "keywords": ["Gaussian Splatting", "Underwater", "Large-scale 3D reconstruction"],
+    "isAccessibleForFree": true
+  }
+  </script>
+</head>
+<body>
+  <button class="scroll-to-top" id="scrollTop" aria-label="Scroll to top"><i class="fas fa-chevron-up"></i></button>
+
+  <main>
+    <section class="hero project-hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop has-text-centered">
+          <div class="paper-badge">SIGGRAPH Asia 2026 Conference Papers</div>
+          <h1 class="title publication-title">OceanXL: Large-scale Underwater 3D Gaussian Splatting via Block Partitioning and Adaptive Pruning</h1>
+
+          <div class="publication-authors">
+            <span>Haoran Wang</span><span>Shaoyu Cai</span><span>Adrian Azzarelli</span><span>Zhuodong Jiang</span><span>Guoxi Huang</span>
+            <span>Eng Tat Khoo</span><span>Brett Seymour</span><span>Fan Zhang</span><span>David Bull</span><span>Nantheera Anantrasirichai</span>
+          </div>
+
+          <div class="publication-affiliations">
+            University of Bristol &nbsp;·&nbsp; National University of Singapore &nbsp;·&nbsp; National Park Service Submerged Resources Center
+          </div>
+
+          <div class="publication-links">
+            <a class="button is-rounded is-dark" href="static/pdfs/OceanXL.pdf" target="_blank"><span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper</span></a>
+            <a class="button is-rounded is-dark" href="https://arxiv.org/abs/2609.29985" target="_blank"><span class="icon"><i class="fas fa-file-lines"></i></span><span>arXiv</span></a>
+            <a class="button is-rounded is-dark" href="https://github.com/WangHaoran16/OceanXL-Large-scale-Underwater-3D-Gaussian-Splatting" target="_blank"><span class="icon"><i class="fab fa-github"></i></span><span>Code</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section teaser-section">
+      <div class="container is-max-desktop">
+        <figure class="hero-figure">
+          <img src="static/images/teaser.jpg" alt="OceanXL teaser comparing large-scale underwater reconstruction quality" loading="eager">
+          <figcaption><strong>OceanXL</strong> is a scalable framework for large-scale underwater 3D Gaussian Splatting that targets compact scene representations while preserving high-fidelity rendering across diverse underwater environments.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section is-light">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3 section-title">Abstract</h2>
+            <div class="content has-text-justified abstract-text">
+              <p>Underwater 3D reconstruction is critical for marine exploration, ecological monitoring, and subsea infrastructure inspection, yet remains challenging at large scale due to light attenuation, scattering, and limited capture coverage. While 3D Gaussian Splatting (3DGS) enables high-quality real-time rendering, its application to large underwater scenes is constrained by high memory consumption and inefficient optimization over extensive areas. We propose OceanXL, a fast and scalable 3DGS-based framework for large-scale underwater reconstruction. OceanXL adopts a divide-and-conquer strategy, partitioning scenes into spatially coherent blocks to enable efficient optimization while preserving global geometric consistency. We further introduce an adaptive pruning scheme tailored to underwater conditions that removes redundant primitives, producing compact representations without sacrificing visual fidelity. Together, these components improve training efficiency and rendering performance for large scenes. We also introduce a large-scale underwater dataset covering diverse marine environments. Experiments on five large-scale scenes demonstrate favorable scalability, compactness, and efficiency–quality trade-offs over large-scene baselines. Controlled comparisons on the small-scale SeaThru-NeRF dataset further show competitive reconstruction quality with substantially smaller model sizes than underwater-specific methods.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section method-section">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 section-title">Method</h2>
+        <p class="method-intro"><strong>OceanXL</strong> combines balanced scene partitioning, underwater-aware densification, and adaptive pruning for scalable underwater 3D Gaussian Splatting.</p>
+
+        <figure class="paper-figure wide">
+          <img src="static/images/workflow.png" alt="OceanXL method pipeline" loading="lazy">
+          <figcaption>Overview of the OceanXL pipeline for scalable and compact underwater scene reconstruction.</figcaption>
+        </figure>
+
+        <div class="method-cards">
+          <article class="method-card">
+            <div class="method-card-header"><span class="method-number">01</span><h3>Balanced Scene Partitioning</h3></div>
+            <p>Balances SfM point density and camera coverage to create spatially coherent chunks for large underwater scenes.</p>
+          </article>
+
+          <article class="method-card">
+            <div class="method-card-header"><span class="method-number">02</span><h3>Underwater-Compensated Densification</h3></div>
+            <p>Uses depth-aware compensation to strengthen weak positional gradients and improve Gaussian allocation in degraded regions.</p>
+          </article>
+
+          <article class="method-card">
+            <div class="method-card-header"><span class="method-number">03</span><h3>Wise Adaptive Pruning + 3D-DoG</h3></div>
+            <p>Removes redundant Gaussians while preserving fine detail with compact 3D Difference-of-Gaussians components.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section is-light">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 section-title">Balanced Partitioning</h2>
+        <div class="columns is-variable is-6 is-vcentered">
+          <div class="column is-6"><img class="panel-image" src="static/images/chunking.png" alt="Balanced Scene Partitioning example on ISRO" loading="lazy"></div>
+          <div class="column is-6"><img class="panel-image" src="static/images/partitioning.png" alt="BlockGaussian and OceanXL partitioning comparison" loading="lazy"></div>
+        </div>
+        <p class="caption-text">OceanXL adaptively adjusts split boundaries to balance point counts, yielding more uniform chunks and camera distributions than geometric-center partitioning.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 section-title">Large-scale Underwater Data</h2>
+        <figure class="paper-figure">
+          <img src="static/images/dataset.png" alt="Samples from the Abyssal and OceanXplore underwater datasets" loading="lazy">
+          <figcaption>Samples from the large-scale underwater scenes used in the study, including ISRO, KWAJ, Komodo, Amirantes1, and Amirantes2.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section results-section is-light">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 section-title">Results</h2>
+        <figure class="paper-figure wide">
+          <img src="static/images/figure_only_2.png" alt="Novel-view rendering comparison with large-scale reconstruction baselines" loading="lazy">
+          <figcaption>Novel-view rendering comparison across Komodo, Eiffel Tower 2016, Tabuhan P1, ISRO, and KWAJ. OceanXL is designed to balance reconstruction fidelity with compact representation.</figcaption>
+        </figure>
+
+        <div class="columns is-variable is-6 result-row">
+          <div class="column is-6">
+            <figure class="paper-figure compact"><img src="static/images/OceanXplore.png" alt="OceanXplore novel view comparison" loading="lazy"><figcaption>Novel-view comparisons on Amirantes1 and Amirantes2.</figcaption></figure>
+          </div>
+          <div class="column is-6">
+            <figure class="paper-figure compact"><img src="static/images/results.jpg" alt="Qualitative comparison on Eiffel Tower 2016 and Tabuhan P1" loading="lazy"><figcaption>Qualitative comparison on Eiffel Tower 2016 and Tabuhan P1.</figcaption></figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 section-title">Compact Detail Reconstruction</h2>
+        <figure class="paper-figure wide">
+          <img src="static/images/DoG.png" alt="3D Difference-of-Gaussians comparison on Amirantes2" loading="lazy">
+          <figcaption>3D-DoG components help recover high-frequency structure while maintaining a compact representation. The activation visualization highlights regions where these components are used.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section is-light">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 section-title">Geometry &amp; Underwater Appearance</h2>
+        <div class="columns is-variable is-6 is-vcentered">
+          <div class="column is-7"><img class="panel-image" src="static/images/point_cloud.png" alt="OceanXL point cloud comparison on KWAJ and Tabuhan P1" loading="lazy"></div>
+          <div class="column is-5"><img class="panel-image" src="static/images/komodo_points.jpg" alt="Underwater color correction comparison on Komodo" loading="lazy"></div>
+        </div>
+        <p class="caption-text">Point-cloud and appearance comparisons illustrate how OceanXL preserves useful scene structure while producing more natural underwater color restoration.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-variable is-6 is-vcentered">
+          <div class="column is-5">
+            <h2 class="title is-3 section-title left">Limitations</h2>
+            <p>When overlap between nearby views is limited, OceanXL can produce blurrier local renderings. The paper identifies this behavior on KWAJ and notes future directions including uncertainty-aware merging, physics-informed partitioning, and temporal reconstruction.</p>
+          </div>
+          <div class="column is-7"><img class="panel-image" src="static/images/failcase.jpg" alt="OceanXL failure case under limited neighboring-view overlap" loading="lazy"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section bib-section is-light" id="BibTeX">
+      <div class="container is-max-desktop">
+        <div class="bibtex-header"><h2 class="title is-3 section-title left">BibTeX</h2><button class="button is-small is-rounded" id="copyBib"><span class="icon"><i class="fas fa-copy"></i></span><span>Copy</span></button></div>
+        <pre id="bibtex-code"><code>@article{wang2026oceanxl,
+  title         = {OceanXL: Large-scale Underwater 3D Gaussian Splatting via Block Partitioning and Adaptive Pruning},
+  author        = {Wang, Haoran and Cai, Shaoyu and Azzarelli, Adrian and Jiang, Zhuodong and Huang, Guoxi and Khoo, Eng Tat and Seymour, Brett and Zhang, Fan and Bull, David and Anantrasirichai, Nantheera},
+  journal       = {arXiv preprint arXiv:2609.29985},
+  year          = {2026},
+  eprint        = {2609.29985},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CV},
+  url           = {https://arxiv.org/abs/2609.29985}
+}</code></pre>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container is-max-desktop has-text-centered">
+      <p>OceanXL · SIGGRAPH Asia 2026 Conference Papers</p>
+      <p class="footer-small">Project page adapted from the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>, originally based on the Nerfies project page.</p>
+    </div>
+  </footer>
+
+  <script src="static/js/index.js"></script>
+</body>
+</html>
