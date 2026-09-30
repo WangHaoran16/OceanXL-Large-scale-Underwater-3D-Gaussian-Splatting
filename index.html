@@ -114,16 +114,35 @@
     <section class="section">
       <div class="container is-max-desktop">
         <h2 class="title is-3 section-title">Method</h2>
-        <p class="section-lead">OceanXL follows a divide-and-conquer reconstruction pipeline: balanced partitions distribute optimization complexity, underwater-aware density control compensates attenuation-induced densification failures, and adaptive pruning keeps each local model compact before global merging.</p>
+        <p class="section-lead">
+          <strong>OceanXL</strong> accelerates large-scale underwater 3D Gaussian Splatting through three complementary components: balanced scene partitioning, underwater-aware densification, and adaptive pruning.
+        </p>
+
         <figure class="paper-figure wide">
           <img src="static/images/workflow.png" alt="OceanXL method pipeline" loading="lazy">
-          <figcaption><strong>Underwater-Pruning Accelerated Gaussian Splatting.</strong> Balanced Scene Partitioning produces spatially coherent chunks; Underwater-Compensated Densification restores missing allocation in degraded depth ranges; Wise Adaptive Pruning removes redundant primitives while progressively introducing 3D Difference-of-Gaussians components.</figcaption>
+          <figcaption>
+            Overview of the OceanXL pipeline for scalable and compact underwater scene reconstruction.
+          </figcaption>
         </figure>
 
         <div class="feature-grid">
-          <article class="feature-card"><span class="feature-index">01</span><h3>Balanced Scene Partitioning</h3><p>Content-aware recursive splitting balances sparse SfM point counts and camera coverage instead of relying on fixed-size grids, improving workload distribution across large underwater scenes.</p></article>
-          <article class="feature-card"><span class="feature-index">02</span><h3>Underwater-Compensated Densification</h3><p>Lightweight learnable depth-aware factors compensate for attenuation-suppressed 2D positional gradients without adding a heavy auxiliary network.</p></article>
-          <article class="feature-card"><span class="feature-index">03</span><h3>Wise Adaptive Pruning + 3D-DoG</h3><p>Redundant Gaussians are progressively pruned while high-frequency detail is preserved through compact Difference-of-Gaussians components.</p></article>
+          <article class="feature-card">
+            <span class="feature-index">01</span>
+            <h3>Balanced Scene Partitioning</h3>
+            <p>Divides large underwater scenes into spatially coherent and computationally balanced chunks using both SfM point density and camera coverage.</p>
+          </article>
+
+          <article class="feature-card">
+            <span class="feature-index">02</span>
+            <h3>Underwater-Compensated Densification</h3>
+            <p>Introduces depth-aware compensation to recover weak positional gradients caused by underwater attenuation, enabling better Gaussian allocation in degraded regions.</p>
+          </article>
+
+          <article class="feature-card">
+            <span class="feature-index">03</span>
+            <h3>Wise Adaptive Pruning + 3D-DoG</h3>
+            <p>Progressively removes redundant Gaussians while preserving fine geometric and appearance details with compact 3D Difference-of-Gaussians components.</p>
+          </article>
         </div>
       </div>
     </section>
